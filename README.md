@@ -21,38 +21,7 @@ La app cuenta con una **interfaz navideña con animación de nieve**, diseñada 
 ---
 
 ## 🔹 Estructura del proyecto
----
-app_libros/
-│
-├── lib/
-│ ├── main.dart ← Punto de entrada
-│
-│ ├── src/
-│ │
-│ │ ├── api/ ← Consumo de APIs
-│ │ │ ├── api_local.dart ← CRUD (API Django)
-│ │ │ └── api_google.dart ← Consulta (Google Books)
-│ │
-│ │ ├── models/ ← Modelos de datos
-│ │ │ └── libro.dart
-│ │
-│ │ ├── screens/ ← Pantallas principales
-│ │ │ ├── inicio.dart ← Menú de selección de API
-│ │ │ ├── local_list.dart ← Lista libros API local
-│ │ │ ├── local_form.dart ← Crear/Editar libro
-│ │ │ ├── local_det.dart ← Detalle libro local
-│ │ │ ├── google_list.dart ← Buscar libros Google
-│ │ │ └── google_det.dart ← Detalle libro Google
-│ │
-│ │ ├── theme/ ← Tema global
-│ │ │ └── app_theme.dart ← Colores y estilos
-│ │
-│ │ └── utils/ ← Constantes y utilidades
-│ │ └── constantes.dart
-│
-├── pubspec.yaml ← Dependencias
-└── README.md
----
+![Estructura de la app](estruct.png)
 
 
 
