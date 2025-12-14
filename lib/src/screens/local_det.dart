@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import '../models/libro.dart';
 import '../api/api_local.dart';
 import 'local_form.dart';
+import '../theme/app_theme.dart';
 
-/// Pantalla de detalle de un libro local
-/// Muestra toda la información del libro y permite editar o eliminar
 class LocalDetScreen extends StatelessWidget {
   final Libro libro;
 
   const LocalDetScreen({super.key, required this.libro});
 
-  /// Función para eliminar el libro con confirmación
   Future<void> _confirmarEliminar(BuildContext context, int id) async {
     final confirmar = await showDialog<bool>(
       context: context,
@@ -24,6 +22,7 @@ class LocalDetScreen extends StatelessWidget {
           ),
           ElevatedButton(
             child: const Text('Eliminar'),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
             onPressed: () => Navigator.pop(context, true),
           ),
         ],
@@ -33,7 +32,7 @@ class LocalDetScreen extends StatelessWidget {
     if (confirmar == true) {
       try {
         await ApiLocal.eliminarLibro(id);
-        Navigator.pop(context, true); // Volver a la lista y refrescar
+        Navigator.pop(context, true);
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('Libro eliminado')));
@@ -45,7 +44,6 @@ class LocalDetScreen extends StatelessWidget {
     }
   }
 
-  /// Función para navegar al formulario de edición
   Future<void> _editarLibro(BuildContext context) async {
     final resultado = await Navigator.push(
       context,
@@ -53,7 +51,7 @@ class LocalDetScreen extends StatelessWidget {
     );
 
     if (resultado == true) {
-      Navigator.pop(context, true); // Volver a la lista y refrescar
+      Navigator.pop(context, true);
     }
   }
 
@@ -62,6 +60,8 @@ class LocalDetScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(libro.titulo),
+        centerTitle: true,
+        backgroundColor: AppTheme.navidadTheme.primaryColor,
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -73,37 +73,90 @@ class LocalDetScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFFFF3E0), Color(0xFFFFE0B2)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Título
-            Text(
-              libro.titulo,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 8,
+          color: Colors.white.withOpacity(0.9),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  libro.titulo,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFB71C1C),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Autor: ${libro.autor}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Año: ${libro.fecha}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'ISBN: ${libro.isbn}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.edit),
+                      label: const Text('Editar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[700],
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 20,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => _editarLibro(context),
+                    ),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.delete),
+                      label: const Text('Eliminar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 20,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => _confirmarEliminar(context, libro.id!),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-
-            // Autor
-            Text('Autor: ${libro.autor}', style: const TextStyle(fontSize: 18)),
-            const SizedBox(height: 5),
-
-            // Año de publicación
-            Text('Año: ${libro.fecha}', style: const TextStyle(fontSize: 18)),
-            const SizedBox(height: 5),
-
-            // ISBN
-            Text('ISBN: ${libro.isbn}', style: const TextStyle(fontSize: 18)),
-            const SizedBox(height: 20),
-
-            // Botón de editar (opcional, ya hay en AppBar)
-            ElevatedButton.icon(
-              icon: const Icon(Icons.edit),
-              label: const Text('Editar'),
-              onPressed: () => _editarLibro(context),
-            ),
-          ],
+          ),
         ),
       ),
     );

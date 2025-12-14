@@ -40,6 +40,10 @@ dependencies:
   # Iconos
   cupertino_icons: ^1.0.8
 
+  # Animación de nieve navideña
+  snow_fall_animation: ^0.0.1+3
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
