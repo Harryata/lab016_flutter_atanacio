@@ -21,7 +21,7 @@ La app cuenta con una **interfaz navideña con animación de nieve**, diseñada 
 ---
 
 ## 🔹 Estructura del proyecto
-
+´´´
 app_libros/
 │
 ├── lib/
@@ -52,7 +52,7 @@ app_libros/
 │
 ├── pubspec.yaml ← Dependencias
 └── README.md
-
+´´´
 text
 
 
