@@ -74,7 +74,6 @@ flutter run
 ---
 
 ## 🔹 Capturas de pantalla
-## 🔹 Capturas de pantalla
 
 ![Inicio con nieve](1_app.png)
 ![Lista de libros local](2_app.png)
